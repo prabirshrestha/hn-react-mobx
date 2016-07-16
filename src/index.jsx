@@ -4,7 +4,7 @@ import { AppContainer } from 'react-hot-loader';
 import AppState from './AppState';
 import App from './App';
 
-const appState = new AppState();
+const appState = window.appState = new AppState();
 
 render(
   <AppContainer>
