@@ -1,7 +1,7 @@
-Hello world app
-=====================
+HackerNews + MobX + React
+=========================
 
-A minimal application that combines [MobX](https://mobxjs.github.io/mobx) with [React](https://facebook.github.io/react).
+A minimal hackernews application that combines [MobX](https://mobxjs.github.io/mobx) with [React](https://facebook.github.io/react).
 Supports ES6 and JSX compilation through babel.
 
 ### Run the example
