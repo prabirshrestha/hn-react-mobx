@@ -3,29 +3,34 @@ import { transaction } from 'mobx';
 import { observer } from 'mobx-react';
 import { PostItem } from './PostItem';
 
-@observer
+function fetchNews() {
+  return fetch('https://hn.algolia.com/api/v1/search?tags=front_page')
+    .then(res => res.json())
+    .then(({ hits }) => hits);
+}
+
+@observer(['store'])
 export class PostList extends React.Component {
   componentWillMount() {
-    const { appState } = this.props;
-    appState.isLoading = true;
-    fetch('https://hn.algolia.com/api/v1/search?tags=front_page')
-      .then(res => res.json())
-      .then(({ hits }) => {
+    const { store } = this.props;
+    store.isLoading = true;
+    fetchNews()
+      .then(posts => {
         transaction(() => {
-          appState.posts = hits;
-          appState.isLoading = false;
-          appState.error = null;
+          store.posts = posts;
+          store.isLoading = false;
+          store.error = null;
         });
       })
       .catch(error => {
         transaction(() => {
-          appState.isLoading = false;
-          appState.error = error;
+          store.isLoading = false;
+          store.error = error;
         });
       });
   }
   render() {
-    const { isLoading, posts, error } = this.props.appState;
+    const { isLoading, posts, error } = this.props.store;
     if (error) {
       return <div>Error occurred: {error.toString()}</div>
     } else if (isLoading) {
