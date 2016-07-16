@@ -7,17 +7,17 @@ export class PostList extends React.Component {
   componentWillMount() {
     const { appState } = this.props;
     appState.isLoading = true;
-      fetch('https://hn.algolia.com/api/v1/search?tags=front_page')
-        .then(res => res.json())
-        .then(({ hits }) => {
-          appState.posts = hits;
-          appState.isLoading = false;
-          appState.error = null;
-        })
-        .catch(error => {
-           appState.isLoading = false;
-           appState.error = error;
-        });
+    fetch('https://hn.algolia.com/api/v1/search?tags=front_page')
+      .then(res => res.json())
+      .then(({ hits }) => {
+        appState.posts = hits;
+        appState.isLoading = false;
+        appState.error = null;
+      })
+      .catch(error => {
+        appState.isLoading = false;
+        appState.error = error;
+      });
   }
   render() {
     const { isLoading, posts, error } = this.props.appState;
